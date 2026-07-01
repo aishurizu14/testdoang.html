@@ -121,6 +121,8 @@ html,body{
     transition:
         opacity 1s,
         transform 1s;
+   
+    z-index: 3;
 
 }
 
