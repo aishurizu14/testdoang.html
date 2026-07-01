@@ -1,3 +1,4 @@
+
 // ==============================
 // ELEMENT
 // ==============================
@@ -12,32 +13,33 @@ const card = document.getElementById("card");
 // ==============================
 
 const texts = [
-    "For you.",
-    "There's something I want you to see.",
-    "Tap anywhere."
+"For you.",
+"There's something I want you to see.",
+"Tap anywhere."
 ];
 
 let index = 0;
 
 function nextText() {
 
-    introText.classList.add("fade");
+introText.classList.add("fade");  
 
-    setTimeout(() => {
+setTimeout(() => {  
 
-        index++;
+    index++;  
 
-        if (index < texts.length) {
+    if (index < texts.length) {  
 
-            introText.textContent = texts[index];
-            introText.classList.remove("fade");
+        introText.textContent = texts[index];  
+        introText.classList.remove("fade");  
 
-            if (index < texts.length - 1) {
-                setTimeout(nextText, 1000);
-            }
-        }
+        if (index < texts.length - 1) {  
+            setTimeout(nextText, 1000);  
+        }  
+    }  
 
-    }, 800);
+}, 800);
+
 }
 
 // start intro
@@ -51,45 +53,40 @@ let started = false;
 
 document.addEventListener("click", async () => {
 
-    if (started) return;
+if (started) return;  
 
-    // harus sudah di text terakhir
-    if (index !== texts.length - 1) return;
+// harus sudah di text terakhir  
+if (index !== texts.length - 1) return;  
 
-    started = true;
+started = true;  
 
-    // ==========================
-    // HIDE INTRO (SAFE MODE)
-    // ==========================
-    intro.style.transition = "opacity 1s ease";
-    intro.style.opacity = "0";
-    intro.style.pointerEvents = "none";
+// ==========================  
+// HIDE INTRO (SAFE MODE)  
+// ==========================  
+intro.style.transition = "opacity 1s ease";  
+intro.style.opacity = "0";  
+intro.style.pointerEvents = "none";  
 
-    // ==========================
-    // SHOW VIDEO + CARD
-    // ==========================
-    video.classList.add("show");
-    card.classList.add("show");
+// ==========================  
+// SHOW VIDEO + CARD  
+// ==========================  
+video.classList.add("show");  
+card.classList.add("show");  
 
-    // 🔥 trigger glow anim (kalau CSS ada .show)
-    video.classList.add("show");
+// ==========================  
+// PLAY VIDEO (fallback safe)  
+// ==========================  
+try {  
+    video.muted = false;  
+    await video.play();  
+} catch (e) {  
+    video.muted = true;  
+    await video.play();  
+}  
 
-    // ==========================
-    // PLAY VIDEO (fallback safe)
-    // ==========================
-    try {
-        video.muted = false;
-        await video.play();
-    } catch (e) {
-        video.muted = true;
-        await video.play();
-    }
-
-    // ==========================
-    // CLEAN EXIT (SAFE)
-    // ==========================
-    setTimeout(() => {
-        intro.style.display = "none";
-    }, 1200);
+// optional cleanup (TIDAK merusak layout)  
+setTimeout(() => {  
+    intro.style.display = "none";  
+}, 1200);
 
 });
