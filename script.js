@@ -27,27 +27,22 @@ function nextText() {
 
         index++;
 
-        if(index < texts.length){
+        if (index < texts.length) {
 
             introText.textContent = texts[index];
             introText.classList.remove("fade");
 
-            // Kalau masih bukan tulisan terakhir,
-            // lanjut otomatis 1 detik lagi.
-            if(index < texts.length - 1){
-
-                setTimeout(nextText,1000);
-
+            // auto lanjut sampai sebelum terakhir
+            if (index < texts.length - 1) {
+                setTimeout(nextText, 1000);
             }
-
         }
 
-    },800);
-
+    }, 800);
 }
 
-// Mulai setelah 1 detik
-setTimeout(nextText,1000);
+// start intro text
+setTimeout(nextText, 1000);
 
 // ==============================
 // START EXPERIENCE
@@ -62,11 +57,15 @@ document.addEventListener("click", async () => {
 
     started = true;
 
-    intro.style.pointerEvents = "none";
-    intro.style.transition = "opacity 1s";
+    // ❌ JANGAN remove (biar layout gak reflow aneh)
     intro.style.opacity = "0";
+    intro.style.pointerEvents = "none";
 
+    intro.style.transition = "opacity 1s ease";
+
+    // video & card show
     video.classList.add("show");
+    card.classList.add("show");
 
     try {
         video.muted = false;
@@ -76,8 +75,4 @@ document.addEventListener("click", async () => {
         await video.play();
     }
 
-    card.classList.add("show");
-
-setTimeout(() => {
-    intro.remove();
-}, 1200);
+});
