@@ -71,6 +71,9 @@ document.addEventListener("click", async () => {
     video.classList.add("show");
     card.classList.add("show");
 
+    // 🔥 trigger glow anim (kalau CSS ada .show)
+    video.classList.add("show");
+
     // ==========================
     // PLAY VIDEO (fallback safe)
     // ==========================
@@ -82,7 +85,9 @@ document.addEventListener("click", async () => {
         await video.play();
     }
 
-    // optional cleanup (TIDAK merusak layout)
+    // ==========================
+    // CLEAN EXIT (SAFE)
+    // ==========================
     setTimeout(() => {
         intro.style.display = "none";
     }, 1200);
