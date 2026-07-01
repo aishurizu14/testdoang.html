@@ -8,7 +8,7 @@ const video = document.getElementById("bgVideo");
 const card = document.getElementById("card");
 
 // ==============================
-// INTRO TEXT
+// INTRO TEXT FLOW
 // ==============================
 
 const texts = [
@@ -32,7 +32,6 @@ function nextText() {
             introText.textContent = texts[index];
             introText.classList.remove("fade");
 
-            // auto lanjut sampai sebelum terakhir
             if (index < texts.length - 1) {
                 setTimeout(nextText, 1000);
             }
@@ -41,7 +40,7 @@ function nextText() {
     }, 800);
 }
 
-// start intro text
+// start intro
 setTimeout(nextText, 1000);
 
 // ==============================
@@ -53,20 +52,28 @@ let started = false;
 document.addEventListener("click", async () => {
 
     if (started) return;
+
+    // harus sudah di text terakhir
     if (index !== texts.length - 1) return;
 
     started = true;
 
-    // ❌ JANGAN remove (biar layout gak reflow aneh)
+    // ==========================
+    // HIDE INTRO (SAFE MODE)
+    // ==========================
+    intro.style.transition = "opacity 1s ease";
     intro.style.opacity = "0";
     intro.style.pointerEvents = "none";
 
-    intro.style.transition = "opacity 1s ease";
-
-    // video & card show
+    // ==========================
+    // SHOW VIDEO + CARD
+    // ==========================
     video.classList.add("show");
     card.classList.add("show");
 
+    // ==========================
+    // PLAY VIDEO (fallback safe)
+    // ==========================
     try {
         video.muted = false;
         await video.play();
@@ -74,5 +81,10 @@ document.addEventListener("click", async () => {
         video.muted = true;
         await video.play();
     }
+
+    // optional cleanup (TIDAK merusak layout)
+    setTimeout(() => {
+        intro.style.display = "none";
+    }, 1200);
 
 });
