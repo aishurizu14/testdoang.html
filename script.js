@@ -76,12 +76,8 @@ document.addEventListener("click", async () => {
         await video.play();
     }
 
-    setTimeout(() => {
-        intro.remove();
-    }, 1000);
+    card.classList.add("show");
 
-    setTimeout(() => {
-        card.classList.add("show");
-    }, 900);
-
-});
+setTimeout(() => {
+    intro.remove();
+}, 1200);
