@@ -53,45 +53,35 @@ setTimeout(nextText,1000);
 // START EXPERIENCE
 // ==============================
 
-document.addEventListener("click", async ()=>{
+let started = false;
 
-    // Hanya aktif kalau sudah sampai "Tap anywhere."
-    if(index !== texts.length-1) return;
+document.addEventListener("click", async () => {
+
+    if (started) return;
+    if (index !== texts.length - 1) return;
+
+    started = true;
 
     intro.style.pointerEvents = "none";
     intro.style.transition = "opacity 1s";
     intro.style.opacity = "0";
 
-    // Video muncul
     video.classList.add("show");
 
-    try{
-
+    try {
         video.muted = false;
-
         await video.play();
-
-    }catch(e){
-
-        // Kalau browser masih menolak suara,
-        // minimal videonya tetap jalan.
+    } catch (e) {
         video.muted = true;
-        video.play();
-
+        await video.play();
     }
 
-    // Hapus intro
-    setTimeout(()=>{
-
+    setTimeout(() => {
         intro.remove();
+    }, 1000);
 
-    },1000);
-
-    // Card muncul
-    setTimeout(()=>{
-
+    setTimeout(() => {
         card.classList.add("show");
+    }, 900);
 
-    },900);
-
-},{once:true});
+});
