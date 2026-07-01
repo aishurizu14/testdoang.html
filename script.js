@@ -71,7 +71,7 @@ intro.style.pointerEvents = "none";
 // SHOW VIDEO + CARD  
 // ==========================  
 video.classList.add("show");  
-card.classList.add("show");  
+card.style.cssText = "opacity:1; transform:translate(-50%,0); z-index:999; position:fixed;";
 
 // ==========================  
 // PLAY VIDEO (fallback safe)  
